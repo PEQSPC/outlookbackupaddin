@@ -2,8 +2,8 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 	<!-- for building new version set mew Product/@id and Product/@Id -->
-	<Product Id="{650dd620-8ddf-4750-9637-6bda1a841e4e}" Name="Outlook-Backup-Plugin" Language="1033"
-           Version="1.12.0.0" Manufacturer="ITEC" UpgradeCode="{9AB4E469-DE8B-4A02-BC02-225D9E698739}">
+	<Product Id="{34A4FCBA-7E2E-41D0-9E6F-3DC2FA3C71CB}" Name="Outlook-Backup-Plugin" Language="1033"
+           Version="1.14.0.0" Manufacturer="ITEC" UpgradeCode="{9AB4E469-DE8B-4A02-BC02-225D9E698739}">
 		<Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade
@@ -153,6 +153,47 @@
 				<Condition><![CDATA[(OFFICE_BITS = 32 OR OFFICE_BITS = 64)]]></Condition>
 				<File Source="..\BackupExecutor\bin\$(var.BackupExecutor.Configuration)\$(var.BackupExecutor.TargetName).exe" KeyPath="yes"  Id="FILE_BackupExecutor"/>
 			</Component>
+			<!-- New  dll add 26-07-2024 -->
+			<Component Guid="{D5A19A6E-76C8-48B3-B459-80F3C862CF1A}" Id="CMP_BackupExecutorJSONDLL" >
+				<Condition><![CDATA[(OFFICE_BITS = 32 OR OFFICE_BITS = 64)]]></Condition>
+				<File Source="..\BackupExecutor\bin\Debug\System.Text.Json.dll" KeyPath="yes"  Id="FILE_JSONDLL"/>
+			</Component>
+
+			<Component Guid="{2E4C3A9B-B45A-435B-8AD4-14C9D0702711}" Id="CMP_BackupExecutorJSONDLLDEPENDENCIAS" >
+				<Condition><![CDATA[(OFFICE_BITS = 32 OR OFFICE_BITS = 64)]]></Condition>
+				<File Source="..\BackupExecutor\bin\Debug\System.Threading.Tasks.Extensions.dll" KeyPath="yes"  Id="FILE_JSONDLL1"/>
+			</Component>
+
+			<Component Guid="{588424E0-0AD5-4EF0-9F6E-DF812C2ADF30}" Id="CMP_BackupExecutorJSONDLLDEPENDENCIAS1" >
+				<Condition><![CDATA[(OFFICE_BITS = 32 OR OFFICE_BITS = 64)]]></Condition>
+				<File Source="..\BackupExecutor\bin\Debug\System.Text.Encodings.Web.dll" KeyPath="yes"  Id="FILE_JSONDLL2"/>
+			</Component>
+
+			<Component Guid="{9F1912BB-CB26-40FE-9E71-EB793B044E31}" Id="CMP_BackupExecutorJSONDLLDEPENDENCIAS2" >
+				<Condition><![CDATA[(OFFICE_BITS = 32 OR OFFICE_BITS = 64)]]></Condition>
+				<File Source="..\BackupExecutor\bin\Debug\System.ValueTuple.dll" KeyPath="yes"  Id="FILE_JSONDLL3"/>
+			</Component>
+
+			<Component Guid="{F2D99BF3-2E30-49A5-BFE5-4D8D2169CBE3}" Id="CMP_BackupExecutorJSONDLLDEPENDENCIAS4" >
+				<Condition><![CDATA[(OFFICE_BITS = 32 OR OFFICE_BITS = 64)]]></Condition>
+				<File Source="..\BackupExecutor\bin\Debug\System.Buffers.dll" KeyPath="yes"  Id="FILE_JSONDLL5"/>
+			</Component>
+
+			<Component Guid="{9B729CC5-73BC-4610-93B3-6BA3E64A1A5F}" Id="CMP_BackupExecutorJSONDLLDEPENDENCIAS5" >
+				<Condition><![CDATA[(OFFICE_BITS = 32 OR OFFICE_BITS = 64)]]></Condition>
+				<File Source="..\BackupExecutor\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll" KeyPath="yes"  Id="FILE_JSONDLL6"/>
+			</Component>
+
+			<Component Guid="{2B84BC94-58CB-4900-9DE0-4ADFB8985C06}" Id="CMP_BackupExecutorJSONDLLDEPENDENCIAS6" >
+				<Condition><![CDATA[(OFFICE_BITS = 32 OR OFFICE_BITS = 64)]]></Condition>
+				<File Source="..\BackupExecutor\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll" KeyPath="yes"  Id="FILE_JSONDLL7"/>
+			</Component>
+
+			<Component Guid="{5CB96DCC-5478-4386-B0D6-FA64880535F4}" Id="CMP_BackupExecutorJSONDLLDEPENDENCIAS7" >
+				<Condition><![CDATA[(OFFICE_BITS = 32 OR OFFICE_BITS = 64)]]></Condition>
+				<File Source="..\BackupExecutor\bin\Debug\System.Memory.dll" KeyPath="yes"  Id="FILE_JSONDLL8"/>
+			</Component>
+			
 			<Component Guid="{0873206A-9E27-473F-9606-F359506715F0}" Id="CMP_BackupExecutorConfig" >
 				<Condition><![CDATA[(OFFICE_BITS = 32 OR OFFICE_BITS = 64)]]></Condition>
 				<File Source="..\BackupExecutor\bin\$(var.BackupExecutor.Configuration)\$(var.BackupExecutor.TargetName).exe.config" KeyPath="yes"  Id="FILE_BackupExecutorConfig"/>

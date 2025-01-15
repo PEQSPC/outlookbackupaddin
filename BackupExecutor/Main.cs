@@ -1,4 +1,5 @@
-﻿using BackupAddInCommon;
+﻿using BackupAddIn.Models;
+using BackupAddInCommon;
 using BackupExecutor.Models;
 using Microsoft.Win32;
 using System;
@@ -216,8 +217,25 @@ namespace BackupExecutor
                     LogToScreen("Email sent successfully.");
                 }
 
-                string url = "https://api.itecapi.duckdns.org/add";
-                await Utils.SendPostRequestAsync(url, config, LogToScreen);
+                LoadXML loadXML = new LoadXML();
+
+                if (loadXML.LoadingXMLFILE() == false)
+                {
+
+
+                    MessageBox.Show("Error Loading XML FILE");
+                    Environment.Exit(0);
+                }
+                string url = loadXML.ip;
+                if (string.IsNullOrEmpty(url))
+                {
+                    MessageBox.Show("URL EMPTY");
+                    Environment.Exit(0);
+                }
+                //string url = "https://localhost:7141/todoitems";
+
+                await BackupAddIn.Models.LoadXML.SendAPIRequest();
+                LogToScreen(url);
 
                 if (cbxShutdownWhenFinished.Checked)
                 {
@@ -228,6 +246,7 @@ namespace BackupExecutor
 
                 await Task.Delay(1000);
                 BackupTool.CanExit = true;
+                MessageBox.Show("Ja pode fechar a aplicaçao");
                 // Application.Exit();
             }
             else

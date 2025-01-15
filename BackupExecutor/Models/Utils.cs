@@ -1,4 +1,5 @@
-﻿using BackupAddInCommon;
+﻿using BackupAddIn.Models;
+using BackupAddInCommon;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,42 +17,48 @@ namespace BackupExecutor
 
         //static internal long size { get; set; }
         //static internal int order { get; set; }
+        static internal string ip { get; set; }
+
+
+
 
         #region SEND API REQUESTS
         // Static function to send a POST request
-        public static async Task SendPostRequestAsync(string url, BackupSettings config, Logger log)
-        {
-            try
-            {
-                // Retrieve PC name and current date
-                string pcName = Environment.MachineName;
-                string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
+        //public static async Task SendPostRequestAsync(string url, BackupSettings config, Logger log)
+        //{
+        //    try
+        //    {
 
 
 
-                var values = new Dictionary<string, string>
-                {
-                    { "nome", $"{pcName}" },
-                    { "data", $"{currentDate}" },
-                    { "tamanho", " (" + Convertbytes(config.Filesizelastbackup) + ")" }
-                };
+        //        // Retrieve PC name and current date
+        //        string userName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+        //        string pcName = Environment.MachineName;
+        //        string currentDate = DateTime.Now.ToString("yyyy-MM-dd");
 
 
-                // Convert the JSON data to a string
-                string jsonString = System.Text.Json.JsonSerializer.Serialize(values);
+
+        //        Registo registo = new Registo();
+        //        registo.Sigla = userName;
+        //        registo.PCName = pcName;
+        //        registo.LastBackupDate = currentDate;
 
 
-                //sends http post request ,if the api is down it saves the request in a file, and sends it when the api is back up
-                await SendSavedRequestsAsync(url, log, jsonString);
+        //        // Convert the JSON data to a string
+        //        string jsonString = System.Text.Json.JsonSerializer.Serialize(registo);
 
+        //        HttpClient client = new HttpClient();
+        //        //sends http post request ,if the api is down it saves the request in a file, and sends it when the api is back up
+        //        var content = new StringContent(jsonString, System.Text.Encoding.UTF8, "application/json");
+        //        var response = await client.PostAsync(url, content);
 
-            }
-            catch (Exception ex)
-            {
-                // Log any exception that occurs
-                log($"Exception caught in SendPostRequestAsync: {ex.Message}");
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Log any exception that occurs
+        //        log($"Exception caught in SendPostRequestAsync: {ex.Message}");
+        //    }
+        //}
         #endregion
 
         #region SaveFile BadResponses & ReadFile
@@ -225,7 +232,7 @@ namespace BackupExecutor
                 // Step 2: Create email message
                 MailMessage mail = new MailMessage
                 {
-                    From = new MailAddress("portal.denuncia@itec.pt"),
+                    From = new MailAddress("sendemailitec@gmail.com"),
                     Subject = "Email de conclusao de backup",
                     Body = $"Backup feito com sucesso no computador {pcName} ,na data {currentDate},com o tamanho{" (" + Convertbytes(config.Filesizelastbackup) + ")"}",
                     IsBodyHtml = true,
