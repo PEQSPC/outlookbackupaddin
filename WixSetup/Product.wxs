@@ -2,8 +2,8 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
      xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
 	<!-- for building new version set mew Product/@id and Product/@Id -->
-	<Product Id="{34A4FCBA-7E2E-41D0-9E6F-3DC2FA3C71CB}" Name="Outlook-Backup-Plugin" Language="1033"
-           Version="1.14.0.0" Manufacturer="ITEC" UpgradeCode="{9AB4E469-DE8B-4A02-BC02-225D9E698739}">
+	<Product Id="{20dac958-1300-4763-a5dc-8d15df7387b8}" Name="Outlook-Backup-Plugin" Language="1033"
+           Version="1.15.0.0" Manufacturer="ITEC" UpgradeCode="{9AB4E469-DE8B-4A02-BC02-225D9E698739}">
 		<Package Id="*" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
 
 		<MajorUpgrade
