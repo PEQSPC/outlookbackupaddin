@@ -4,6 +4,7 @@ using Microsoft.Win32.SafeHandles;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -12,6 +13,7 @@ using System.Resources;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -84,6 +86,89 @@ namespace BackupExecutor
         }
 
 
+        /// <summary>
+        /// Deletes old backup files based on the specified configuration settings.
+        /// </summary>
+        /// <remarks>This method identifies and deletes backup files that meet the criteria specified in
+        /// the <paramref name="config"/> parameter. Ensure that the configuration settings are properly defined to
+        /// avoid unintended deletions.</remarks>
+        /// <param name="config">The configuration settings that define the criteria for deleting old backups, such as retention period and
+        /// backup location.</param>
+        /// <param name="log">The logger used to record information, warnings, or errors during the deletion process.</param>
+        /// <returns>The number of backup files successfully deleted.</returns>
+        public static int DeleteOldBackups(BackupSettings config, Logger log)
+        {
+            if (config == null)
+            {
+                log("Backup configuration is null.");
+                CreateLog.CriarLog("Backup configuration is null.");
+                return 0;
+            }
+
+            if (!config.DeleteOldBackups)
+            {
+                log("Old backup deletion is not enabled.");
+                CreateLog.CriarLog("Old backup deletion is not enabled.");
+                return 0;
+            }
+
+            log("Deleting old backups...");
+            CreateLog.CriarLog("Deleting old backups...");
+
+            int deletedCount = 0;
+            string backupPath = Environment.ExpandEnvironmentVariables(config.DestinationPath);
+
+            if (!backupPath.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                backupPath += Path.DirectorySeparatorChar;
+
+            try
+            {
+                DirectoryInfo backupDir = new DirectoryInfo(backupPath);
+
+                // Get the week number of the last run
+                int lastRunWeek = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(
+                    config.LastRun, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+
+                foreach (string originalFilePath in config.Items)
+                {
+                    string originalFileName = Path.GetFileNameWithoutExtension(originalFilePath);
+                    string fileExtension = Path.GetExtension(originalFilePath); // Optional: if you want to match on ext
+
+                    // Pattern to match this specific file’s backups
+                    string regexPattern = $@"^{DateTime.Now.Year}_CW_(\d\d)_{Regex.Escape(originalFileName)}{Regex.Escape(config.BackupSuffix)}{Regex.Escape(fileExtension)}$";
+                    Regex regex = new Regex(regexPattern);
+
+                    FileInfo[] files = backupDir.GetFiles($"*{config.BackupSuffix}{fileExtension}");
+
+                    foreach (FileInfo file in files)
+                    {
+                        Match match = regex.Match(file.Name);
+                        if (!match.Success)
+                            continue;
+
+                        int fileWeek = int.Parse(match.Groups[1].Value);
+
+                        if (fileWeek < lastRunWeek)
+                        {
+                            file.Delete();
+                            log($"Deleted old backup file: {file.FullName}");
+                            CreateLog.CriarLog($"Deleted old backup file: {file.FullName}");
+                            deletedCount++;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log($"Error deleting old backups: {ex.Message}");
+                CreateLog.CriarLogErro(ex.Message, "DeleteOldBackups");
+            }
+
+            return deletedCount;
+        }
+
+
+
 
         /// <summary>
         /// Waits, till outlook ends and then starts the backup process
@@ -113,7 +198,7 @@ namespace BackupExecutor
                     if (WaitForProcessEnd(OUTLOOK_PROC, log))
                     {
                         log("No outlook process found");
-                        CreateLog.CriarLogErro("No outlook process found","linha 115");
+                        CreateLog.CriarLogErro("No outlook process found", "linha 115");
                         iError += DoBackup(config, log);
                         if (!String.IsNullOrEmpty(config.PostBackupCmd))
                         {
@@ -328,7 +413,7 @@ namespace BackupExecutor
                     {
                         iError++;
                         log(e.Message);
-                        CreateLog.CriarLogErro(e.Message,"linha 331");
+                        CreateLog.CriarLogErro(e.Message, "linha 331");
                     }
                 } //for each
             } //using
@@ -356,7 +441,8 @@ namespace BackupExecutor
                         Compress.Write(buffer, 0, read);
                         readTotal += read;
                         UpdateProgressIndicators(readTotal, fi.Length);
-                    };
+                    }
+                    ;
 
                     Compress.Close();
                 }
@@ -667,7 +753,7 @@ namespace BackupExecutor
                     log("Error retrieving file size from: -" + path + "-");
                     return -1;
                 }
-                return (long)(((ulong)fileData.nFileSizeHigh << 32) + (ulong)fileData.nFileSizeLow);
+                return (long)(((ulong)fileData.nFileSizeHigh << 32) + fileData.nFileSizeLow);
             }
             catch (Exception e)
             {

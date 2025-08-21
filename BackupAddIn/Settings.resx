@@ -696,6 +696,78 @@
   <data name="gbOptionalSettings.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
   </data>
+  <data name="cbxBackupDeleteOldBackups.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="cbxBackupDeleteOldBackups.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="cbxBackupDeleteOldBackups.CheckAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="cbxBackupDeleteOldBackups.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="cbxBackupDeleteOldBackups.Location" type="System.Drawing.Point, System.Drawing">
+    <value>526, 82</value>
+  </data>
+  <data name="cbxBackupDeleteOldBackups.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 4, 4, 4</value>
+  </data>
+  <data name="cbxBackupDeleteOldBackups.Size" type="System.Drawing.Size, System.Drawing">
+    <value>18, 17</value>
+  </data>
+  <data name="cbxBackupDeleteOldBackups.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;cbxBackupDeleteOldBackups.Name" xml:space="preserve">
+    <value>cbxBackupDeleteOldBackups</value>
+  </data>
+  <data name="&gt;&gt;cbxBackupDeleteOldBackups.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;cbxBackupDeleteOldBackups.Parent" xml:space="preserve">
+    <value>gbOptionalSettings</value>
+  </data>
+  <data name="&gt;&gt;cbxBackupDeleteOldBackups.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="label1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Bottom, Left</value>
+  </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>356, 81</value>
+  </data>
+  <data name="label1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>4, 0, 4, 0</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>160, 16</value>
+  </data>
+  <data name="label1.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Eliminar backups antigos:</value>
+  </data>
+  <data name="&gt;&gt;label1.Name" xml:space="preserve">
+    <value>label1</value>
+  </data>
+  <data name="&gt;&gt;label1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
+    <value>gbOptionalSettings</value>
+  </data>
+  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="lblSeconds.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
   </data>
@@ -730,7 +802,7 @@
     <value>gbOptionalSettings</value>
   </data>
   <data name="&gt;&gt;lblSeconds.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
   <data name="numCountdown.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -757,7 +829,7 @@
     <value>gbOptionalSettings</value>
   </data>
   <data name="&gt;&gt;numCountdown.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>3</value>
   </data>
   <data name="lblCountdown.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -793,7 +865,7 @@
     <value>gbOptionalSettings</value>
   </data>
   <data name="&gt;&gt;lblCountdown.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>4</value>
   </data>
   <data name="txtPostBackupCmd.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left, Right</value>
@@ -820,7 +892,7 @@
     <value>gbOptionalSettings</value>
   </data>
   <data name="&gt;&gt;txtPostBackupCmd.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>5</value>
   </data>
   <data name="lblPostBackupCmd.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -853,10 +925,13 @@
     <value>gbOptionalSettings</value>
   </data>
   <data name="&gt;&gt;lblPostBackupCmd.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>6</value>
   </data>
   <data name="txtSuffix.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
+  </data>
+  <data name="txtSuffix.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="txtSuffix.Location" type="System.Drawing.Point, System.Drawing">
     <value>411, 20</value>
@@ -880,7 +955,7 @@
     <value>gbOptionalSettings</value>
   </data>
   <data name="&gt;&gt;txtSuffix.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>7</value>
   </data>
   <data name="lblSuffix.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -913,10 +988,13 @@
     <value>gbOptionalSettings</value>
   </data>
   <data name="&gt;&gt;lblSuffix.ZOrder" xml:space="preserve">
-    <value>6</value>
+    <value>8</value>
   </data>
   <data name="txtPrefix.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
+  </data>
+  <data name="txtPrefix.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="txtPrefix.Location" type="System.Drawing.Point, System.Drawing">
     <value>175, 20</value>
@@ -940,7 +1018,7 @@
     <value>gbOptionalSettings</value>
   </data>
   <data name="&gt;&gt;txtPrefix.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>9</value>
   </data>
   <data name="lblBPrefix.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Bottom, Left</value>
@@ -973,7 +1051,7 @@
     <value>gbOptionalSettings</value>
   </data>
   <data name="&gt;&gt;lblBPrefix.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>10</value>
   </data>
   <data name="gbOptionalSettings.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 436</value>

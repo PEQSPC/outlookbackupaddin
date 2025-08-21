@@ -51,6 +51,8 @@
             this.folderBrowserdlg = new System.Windows.Forms.FolderBrowserDialog();
             this.fileOpenDialog = new System.Windows.Forms.OpenFileDialog();
             this.gbOptionalSettings = new System.Windows.Forms.GroupBox();
+            this.cbxBackupDeleteOldBackups = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.lblSeconds = new System.Windows.Forms.Label();
             this.numCountdown = new System.Windows.Forms.NumericUpDown();
             this.lblCountdown = new System.Windows.Forms.Label();
@@ -215,6 +217,8 @@
             // gbOptionalSettings
             // 
             resources.ApplyResources(this.gbOptionalSettings, "gbOptionalSettings");
+            this.gbOptionalSettings.Controls.Add(this.cbxBackupDeleteOldBackups);
+            this.gbOptionalSettings.Controls.Add(this.label1);
             this.gbOptionalSettings.Controls.Add(this.lblSeconds);
             this.gbOptionalSettings.Controls.Add(this.numCountdown);
             this.gbOptionalSettings.Controls.Add(this.lblCountdown);
@@ -226,6 +230,17 @@
             this.gbOptionalSettings.Controls.Add(this.lblBPrefix);
             this.gbOptionalSettings.Name = "gbOptionalSettings";
             this.gbOptionalSettings.TabStop = false;
+            // 
+            // cbxBackupDeleteOldBackups
+            // 
+            resources.ApplyResources(this.cbxBackupDeleteOldBackups, "cbxBackupDeleteOldBackups");
+            this.cbxBackupDeleteOldBackups.Name = "cbxBackupDeleteOldBackups";
+            this.cbxBackupDeleteOldBackups.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            resources.ApplyResources(this.label1, "label1");
+            this.label1.Name = "label1";
             // 
             // lblSeconds
             // 
@@ -345,5 +360,7 @@
         private System.Windows.Forms.NumericUpDown numCountdown;
         private System.Windows.Forms.Label lblCountdown;
         private System.Windows.Forms.Label label_version;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox cbxBackupDeleteOldBackups;
     }
 }

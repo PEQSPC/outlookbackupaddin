@@ -1,5 +1,4 @@
-﻿using BackupAddIn.Models;
-using BackupAddInCommon;
+﻿using BackupAddInCommon;
 using BackupExecutor.Models;
 using Microsoft.Win32;
 using System;
@@ -28,6 +27,8 @@ namespace BackupExecutor
             BackupSettings config = BackupSettingsDao.LoadSettings();
             foreach (string item in config.Items)
             {
+
+                Console.WriteLine(item);
 
                 int result = GetFileSizeover15(item);
 
@@ -152,7 +153,7 @@ namespace BackupExecutor
             {
                 return 0;
             }
-            len = (long)(((ulong)fileData.nFileSizeHigh << 32) + (ulong)fileData.nFileSizeLow);
+            len = (long)(((ulong)fileData.nFileSizeHigh << 32) + fileData.nFileSizeLow);
 
             //algoritmo para converter o tamanho do ficheiro
             //double len = new FileInfo(filename).Length;
@@ -184,7 +185,9 @@ namespace BackupExecutor
                   inputDate,
                   CalendarWeekRule.FirstDay,
                   DayOfWeek.Monday);
-            config.BackupPrefix = $"{DateTime.Now.Year.ToString()}_CW_{weekNum}";
+
+            // Set the backup prefix with the current year and week number (default setting to all the users)
+            //config.BackupPrefix = $"{DateTime.Now.Year.ToString()}_CW_{weekNum}_";
             int iError = 1;
 
             BackupTool.SetFileLabel(this.lblFilename);
@@ -207,8 +210,14 @@ namespace BackupExecutor
 
             if (iError == 0)
             {
-                bool resultemail = await Task.Run(() => Utils.SendSMTPEmail(LogToScreen, config));
-                if (!resultemail)
+                bool resultEmail = false;
+
+#if !DEBUG
+resultEmail = await Task.Run(() => Utils.SendSMTPEmail(LogToScreen, config));
+#else
+                LogToScreen("DEBUG MODE: Email not sent.");
+#endif
+                if (!resultEmail)
                 {
                     LogToScreen("No internet connection. Email has been queued.");
                 }
@@ -217,25 +226,37 @@ namespace BackupExecutor
                     LogToScreen("Email sent successfully.");
                 }
 
-                LoadXML loadXML = new LoadXML();
 
-                if (loadXML.LoadingXMLFILE() == false)
+                //parte que comunica com a api para fazer o registo do backup de todos os utilizadores
+                //LoadXML loadXML = new LoadXML();
+
+                //if (loadXML.LoadingXMLFILE() == false)
+                //{
+
+
+                //    MessageBox.Show("Error Loading XML FILE");
+                //    Environment.Exit(0);
+                //}
+                //string url = loadXML.ip;
+                //if (string.IsNullOrEmpty(url))
+                //{
+                //    MessageBox.Show("URL EMPTY");
+                //    Environment.Exit(0);
+                //}
+                ////string url = "https://localhost:7141/todoitems";
+
+                //await BackupAddIn.Models.LoadXML.SendAPIRequest();
+                //LogToScreen(url);
+
+
+                //delete old backups
+                if (config.DeleteOldBackups)
                 {
-
-
-                    MessageBox.Show("Error Loading XML FILE");
-                    Environment.Exit(0);
+                    LogToScreen("Deleting old backups ...");
+                    int iDeleted = await Task.Run(() => BackupTool.DeleteOldBackups(config, LogToScreen));
+                    LogToScreen(iDeleted + " old backups deleted.");
                 }
-                string url = loadXML.ip;
-                if (string.IsNullOrEmpty(url))
-                {
-                    MessageBox.Show("URL EMPTY");
-                    Environment.Exit(0);
-                }
-                //string url = "https://localhost:7141/todoitems";
 
-                await BackupAddIn.Models.LoadXML.SendAPIRequest();
-                LogToScreen(url);
 
                 if (cbxShutdownWhenFinished.Checked)
                 {
@@ -246,7 +267,7 @@ namespace BackupExecutor
 
                 await Task.Delay(1000);
                 BackupTool.CanExit = true;
-                MessageBox.Show("Ja pode fechar a aplicaçao");
+                //MessageBox.Show("Ja pode fechar a aplicaçao");
                 // Application.Exit();
             }
             else

@@ -68,7 +68,7 @@ namespace BackupAddIn
                   inputDate,
                   CalendarWeekRule.FirstDay,
                   DayOfWeek.Monday);
-                txtPrefix.Text = $"{DateTime.Now.Year.ToString()}_CW_{weekNum}";
+                txtPrefix.Text = config.BackupPrefix;
                 txtSuffix.Text = config.BackupSuffix;
                 txtPostBackupCmd.Text = config.PostBackupCmd;
                 numCountdown.Value = config.CountdownSeconds;
@@ -81,6 +81,10 @@ namespace BackupAddIn
                 }
 
                 cbxBackupAll.Checked = config.BackupAll;
+
+
+                
+                cbxBackupDeleteOldBackups.Checked = config.DeleteOldBackups;
 
                 if (config.LastRun > DateTime.MinValue)
                     txtLastBackup.Text = config.LastRun.ToString("dd.MM.yyyy HH:mm:ss");
@@ -118,6 +122,7 @@ namespace BackupAddIn
             config.BackupSuffix = txtSuffix.Text;
             config.PostBackupCmd = txtPostBackupCmd.Text;
             config.BackupAll = cbxBackupAll.Checked;
+            config.DeleteOldBackups = cbxBackupDeleteOldBackups.Checked;
             config.CountdownSeconds = (int)numCountdown.Value;
             if (String.IsNullOrEmpty(txtLastBackup.Text))
                 config.LastRun = DateTime.MinValue;

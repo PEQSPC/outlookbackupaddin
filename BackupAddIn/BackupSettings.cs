@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Globalization;
 using System.Net.Mail;
 
 namespace BackupAddInCommon
@@ -66,10 +67,26 @@ namespace BackupAddInCommon
         /// </summary>
         public int WaitTimeFileLock { get; set; }
 
+        //private static int weekNum = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(DateTime.Now, CalendarWeekRule.FirstDay, DayOfWeek.Monday);
+
+        /// <summary>
+        /// Returns the current week number in the year
+        /// </summary>
+        /// <returns></returns>
+        private static string WeekNumber()
+        {
+            int weekNumber = CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(
+                DateTime.Now,
+                CalendarWeekRule.FirstDay,
+                DayOfWeek.Monday);
+
+            return weekNumber.ToString("D2"); // D2 formats with 2 digits, leading zero if needed
+        }
+
         /// <summary>
         ///  Prefix for filename of backup
         /// </summary>
-        public string BackupPrefix { get; set; }
+        public string BackupPrefix { get; set; } = $"{DateTime.Now.Year.ToString()}_CW_{WeekNumber()}_";
 
         /// <summary>
         ///  Suffix for filename of backup
@@ -80,6 +97,12 @@ namespace BackupAddInCommon
         ///  Flag whether to backup all pst-files
         /// </summary>
         public bool BackupAll { get; set; }
+
+
+        /// <summary>
+        ///  Flag whether to delete old backups 
+        /// </summary>
+        public bool DeleteOldBackups { get; set; }
 
         /// <summary>
         ///  Command to run after backup finished
@@ -160,5 +183,8 @@ namespace BackupAddInCommon
         ///  used profile name
         /// </summary>
         public string ProfileName { get; set; }
+
+
+        
     }
 }
